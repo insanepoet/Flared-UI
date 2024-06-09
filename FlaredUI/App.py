@@ -11,7 +11,6 @@ from FlaredUI.Routes import api_bp
 
 # Create the Flask app
 app = Flask(__name__)
-# CORS(app) - TODO: Disabled for testing
 
 
 # Initialize Logging
