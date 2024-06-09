@@ -66,6 +66,11 @@ swagger = Swagger(app, config=swagger_config, template=template)
 app.register_blueprint(api_bp, url_prefix="/api")
 
 
+@LoginManager.user_loader  # Keep this decorator as-is
+def load_user(user_id):
+    return User.query(int(user_id))  # Assuming your user IDs are integers
+
+
 # Example route for the main page
 @app.route('/')
 def index():

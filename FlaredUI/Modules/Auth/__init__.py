@@ -6,7 +6,8 @@ import sys
 # Create LoginManager (if needed)
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = "auth.userpass_login"
+# login_manager.login_view = "auth.userpass_login"
+login_manager.login_view = 'auth.login'
 
 
 # Get the current module
