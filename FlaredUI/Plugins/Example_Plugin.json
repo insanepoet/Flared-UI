@@ -1,0 +1,51 @@
+// This file is purely an example of what the contents of a plugin.json could/should contain
+
+/// Backend Plugin
+  {
+    "name": "Custom Authentication Plugin",
+    "type": "backend",
+    "version": "1.0.0",
+    "description": "Adds support for custom authentication methods.",
+    "entry_point": "custom_auth.py",
+    "requires": [],
+    "config": {
+      // (Optional)
+      "auth_provider": "MyCustomAuthProvider",
+      "auth_url": "https://example.com/auth"
+    }
+  },
+
+
+/// Frontend Plugin
+  {
+    "name": "Advanced Dashboard Widgets",
+    "type": "frontend",
+    "version": "0.5.2",
+    "description": "Provides additional widgets for the dashboard.",
+    "entry_point": "dashboard_widgets.js",
+    "requires": [
+      "React",
+      "Chart.js"
+    ],
+    "config": {
+      // (Optional)
+      "widget_list": [
+        "TrafficChart",
+        "ResourceUsageTable"
+      ]
+    }
+  },
+
+
+/// Backend Plugin Requiring a Frontend Plugin
+  {
+    "name": "Custom Dashboard Plugin",
+    "type": "backend",
+    "version": "1.0.0",
+    "description": "Adds support for custom widgets.",
+    "entry_point": "custom_auth.py",
+    "requires": [
+      "Advanced Dashboard Widgets"
+    ],
+    "config": {}
+  }
