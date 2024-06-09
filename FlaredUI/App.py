@@ -1,8 +1,9 @@
 import os
 from flask import Flask, jsonify, request
 from flask_login import LoginManager, current_user
+from flasgger import Swagger, LazyString, LazyJSONEncoder
 from FlaredUI.Config import config, DatabaseURI
-from FlaredUI.Modules.DB import init_db, Settings, get_api_key_by_value, User
+from FlaredUI.Modules.DB import init_db, Settings, get_api_key_by_value, User, db
 from FlaredUI.Modules.Auth.OAuth import init_oauth
 from FlaredUI.Logging.Init_Logging import initialize_logging
 from FlaredUI.Routes import api_bp
@@ -73,8 +74,7 @@ def index():
     if not current_user.is_authenticated:
         return jsonify({"message": "Please log in to access the Flared-UI Backend."}), 401
     else:
-        return jsonify({"message": "Welcome to the Flared-UI Backend. All requests should be made starting at the "
-                                   "/api endpoint, see the OpenAPI documentation at /Docs/"}), 200
+        return jsonify({"message": "Welcome to the Flared-UI Backend, there isn't much to see here."}), 200
 
 
 if __name__ == '__main__':
