@@ -1,8 +1,11 @@
 import podman
 import json
-
 from FlaredUI.Modules.DB import create_container, update_container
 from FlaredUI.Modules.Errors import PodmanError
+from FlaredUI.Logging import get_logger
+
+
+logger = get_logger(__name__)
 
 
 def get_podman_container_info(server, container_name, ssh_client=None):
@@ -39,10 +42,10 @@ def get_podman_container_info(server, container_name, ssh_client=None):
         return filtered_data
 
     except (podman.errors.ErrorOccurred, podman.errors.APIError) as e:  # Catch podman errors
-        app.logger.error(f"Podman Error: {e}")
+        logger.error(f"Podman Error: {e}")
         raise PodmanError(f"Podman error: {e}")
     except Exception as e:
-        app.logger.error(f"Error getting Podman container info: {e}")
+        logger.error(f"Error getting Podman container info: {e}")
         raise  # Re-raise the exception after logging
 
 
@@ -73,8 +76,8 @@ def list_podman_containers(server, ssh_client=None):
         return filtered_data
 
     except (podman.errors.ErrorOccurred, podman.errors.APIError) as e:  # Catch podman errors
-        app.logger.error(f"Podman Error: {e}")
+        logger.error(f"Podman Error: {e}")
         raise PodmanError(f"Podman error: {e}")
     except Exception as e:
-        app.logger.error(f"Error listing Podman containers: {e}")
+        logger.error(f"Error listing Podman containers: {e}")
         raise

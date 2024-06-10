@@ -3,6 +3,9 @@ from flask_login import login_required
 from FlaredUI.Modules.DB import db, get_plugin_by_id, update_plugin
 from FlaredUI.Modules.Errors import PluginNotFoundError, PluginInvalidOperationError
 from flasgger import swag_from
+from FlaredUI.Logging import get_logger
+
+logger = get_logger(__name__)
 
 op_plugin_bp = Blueprint("op_plugins", __name__, url_prefix="/api/plugins")
 
@@ -17,11 +20,11 @@ def activate_plugin(plugin_id):
         if not plugin:
             return jsonify({"error": "Plugin not found"}), 404
         # TODO: Add your activation logic here
-        app.logger.info(f"Activated plugin '{plugin.name}'")
+        logger.info(f"Activated plugin '{plugin.name}'")
         return jsonify({"message": f"Plugin '{plugin.name}' activated"}), 200
 
     except Exception as e:
-        app.logger.error(f"Error activating plugin: {e}")
+        logger.error(f"Error activating plugin: {e}")
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
@@ -42,13 +45,13 @@ def deactivate_plugin(plugin_id):
 
         plugin.active = False
         update_plugin(plugin.id, plugin.to_dict())  # Save changes to the database
-        app.logger.info(f"Deactivated plugin '{plugin.name}'")
+        logger.info(f"Deactivated plugin '{plugin.name}'")
         return jsonify({"message": f"Plugin '{plugin.name}' deactivated"}), 200
     except (PluginNotFoundError, PluginInvalidOperationError) as e:
         # Handle specific plugin errors
         return jsonify({"error": str(e)}), 400  # Bad Request
     except Exception as e:
         # Log and handle other unexpected errors
-        app.logger.error(f"Error deactivating plugin: {e}")
+        logger.error(f"Error deactivating plugin: {e}")
         db.session.rollback()
         return jsonify({"error": "Internal Server Error"}), 500

@@ -33,7 +33,7 @@ def get_docker_container_info(server, container_name, ssh_client=None):
     except docker.errors.NotFound:
         raise ValueError(f"Docker container '{container_name}' not found.")
     except Exception as e:
-        app.logger.error(f"Error getting Docker container info: {e}")
+        logger.error(f"Error getting Docker container info: {e}")
         raise
 
 
@@ -66,5 +66,5 @@ def list_docker_containers(server, ssh_client=None):
         return filtered_containers
 
     except Exception as e:
-        app.logger.error(f"Error listing Docker containers: {e}")
+        logger.error(f"Error listing Docker containers: {e}")
         raise

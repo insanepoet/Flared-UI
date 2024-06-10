@@ -47,12 +47,12 @@ def run_cloudflared_command(command_args, input_data=None):
 
         # Log stderr output if present
         if result.stderr:
-            app.logger.warning(f"cloudflared command stderr: {result.stderr}")
+            logger.warning(f"cloudflared command stderr: {result.stderr}")
 
         return output
 
     except subprocess.CalledProcessError as e:
-        app.logger.error(f"Error running cloudflared command: {e}")
+        logger.error(f"Error running cloudflared command: {e}")
         error_output = e.stderr if e.stderr else "An error occurred."
         raise CloudflaredError(error_output)
 

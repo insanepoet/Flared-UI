@@ -8,6 +8,10 @@ from FlaredUI.Modules.DB import (
 )
 from FlaredUI.Modules.Containers import get_container_info, list_containers
 from flasgger import swag_from
+from FlaredUI.Logging import get_logger
+
+
+logger = get_logger(__name__)
 
 db_container_bp = Blueprint('container', __name__)
 
@@ -26,7 +30,7 @@ def list_containers_route(server_id):
         containers = list_containers(server)  # Update the function call
         return jsonify(containers), 200
     except Exception as e:
-        app.logger.error(f"Error listing containers: {e}")
+        logger.error(f"Error listing containers: {e}")
         return jsonify({"error": str(e)}), 500
 
 
@@ -44,5 +48,5 @@ def get_container_route(server_id, container_name):
         container_info = get_container_info(server, container_name)
         return jsonify(container_info), 200
     except Exception as e:
-        app.logger.error(f"Error getting container info: {e}")
+        logger.error(f"Error getting container info: {e}")
         return jsonify({"error": str(e)}), 500

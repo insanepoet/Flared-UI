@@ -19,7 +19,7 @@ def load_user_from_api_key(request):
             user = api_key.user
             if user and user.is_active:
                 # Log successful login to main_file
-                app.logger.info(f"{user.username} logged in using API key.")
+                logger.info(f"{user.username} logged in using API key.")
                 return user
     # Authentication failed, log to auth_file (propagate=False prevents logging to main_file)
     logger.warning(f"API Key authentication failed for key: {api_key_value if api_key_value else 'None'}")

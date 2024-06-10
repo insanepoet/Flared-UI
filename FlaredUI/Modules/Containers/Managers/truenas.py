@@ -1,8 +1,10 @@
 import json
-
 import requests
 from urllib3.exceptions import InsecureRequestWarning
 from FlaredUI.Modules.Errors import TrueNASJailError
+from FlaredUI.Logging import get_logger
+
+logger = get_logger(__name__)
 
 requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 
@@ -48,7 +50,7 @@ def get_truenas_jail_container_info(server, jail_name, ssh_client=None):
             raise TrueNASJailError(f"TrueNAS jail '{jail_name}' not found or not running.")
 
     except requests.exceptions.RequestException as e:
-        app.logger.error(f"Error getting TrueNAS jail info: {e}")
+        logger.error(f"Error getting TrueNAS jail info: {e}")
         raise TrueNASJailError(f"Error communicating with TrueNAS API: {e}")
 
 def list_truenas_jail_containers(server, ssh_client=None):
@@ -83,5 +85,5 @@ def list_truenas_jail_containers(server, ssh_client=None):
         return filtered_data
 
     except requests.exceptions.RequestException as e:
-        app.logger.error(f"Error listing TrueNAS jails: {e}")
+        logger.error(f"Error listing TrueNAS jails: {e}")
         raise TrueNASJailError(f"Error communicating with TrueNAS API: {e}")

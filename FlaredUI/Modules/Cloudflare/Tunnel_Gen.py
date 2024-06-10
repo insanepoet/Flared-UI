@@ -44,6 +44,5 @@ def generate_cloudflared_config(tunnel_id):
             f.write(yaml_config)
     except Exception as e:
         # Log the error
-        app.logger.error(f"Error generating Cloudflared config: {e}")
+        logger.error(f"Error generating Cloudflared config: {e}")
         raise
-    

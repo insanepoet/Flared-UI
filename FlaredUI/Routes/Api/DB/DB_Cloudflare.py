@@ -10,6 +10,9 @@ from FlaredUI.Modules.Cloudflare import create_cloudflared_tunnel, cloudflared_t
 from FlaredUI.Modules.Errors import CloudflaredError
 from sqlalchemy.exc import SQLAlchemyError
 from markupsafe import Markup
+from FlaredUI.Logging import get_logger
+
+logger = get_logger(__name__)
 
 db_cf_bp = Blueprint("cf", __name__, url_prefix="/api/cloudflare")
 
@@ -56,14 +59,14 @@ def create_tunnel_route():
         return jsonify(tunnel.to_dict()), 201
     except ValidationError as err:
         db.session.rollback()  # Rollback the transaction if validation fails
-        app.logger.error(f"Validation error creating tunnel: {err.messages}")
+        logger.error(f"Validation error creating tunnel: {err.messages}")
         return jsonify(err.messages), 400  # Bad Request
     except (CloudflaredError) as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
     except Exception as e:
         db.session.rollback()
-        app.logger.error(f"Unexpected error creating tunnel: {e}")
+        logger.error(f"Unexpected error creating tunnel: {e}")
         return jsonify({"error": "Internal server error"}), 500
 
 
@@ -90,7 +93,7 @@ def list_tunnels_route():
 
         return jsonify(tunnel_list)
     except Exception as e:
-        app.logger.error(f"Error listing tunnels: {e}")
+        logger.error(f"Error listing tunnels: {e}")
         return jsonify({"error": "Internal server error"}), 500
 
 
@@ -116,7 +119,7 @@ def get_tunnel_route(tunnel_id):
 
         return jsonify(tunnel_data), 200
     except Exception as e:
-        app.logger.error(f"Error getting tunnel: {e}")
+        logger.error(f"Error getting tunnel: {e}")
         return jsonify({"error": "Internal server error"}), 500
 
 
@@ -141,7 +144,7 @@ def update_tunnel_route(tunnel_id):
         return jsonify(err.messages), 400
     except Exception as e:  # Catch any other unexpected exceptions
         db.session.rollback()
-        app.logger.error(f"Error updating tunnel: {e}")
+        logger.error(f"Error updating tunnel: {e}")
         return jsonify({"error": "Internal server error"}), 500
 
 
@@ -163,7 +166,7 @@ def delete_tunnel_route(tunnel_id):
         return jsonify({"message": "Tunnel deleted successfully"}), 200
     except Exception as e:  # Catch any other unexpected exceptions
         db.session.rollback()  # Rollback the database transaction if an error occurs
-        app.logger.error(f"Error deleting tunnel: {e}")
+        logger.error(f"Error deleting tunnel: {e}")
         return jsonify({"error": "Internal server error"}), 500
 
 
@@ -182,7 +185,7 @@ def list_routes(tunnel_id):
         routes = get_routes_for_tunnel(tunnel_id)
         return jsonify([route.to_dict() for route in routes]), 200
     except Exception as e:
-        app.logger.error(f"Error listing routes: {e}")
+        logger.error(f"Error listing routes: {e}")
         return jsonify({"error": str(e)}), 500
 
 
@@ -220,7 +223,7 @@ def create_route():
     except ValidationError as err:
         return jsonify(err.messages), 400
     except Exception as e:
-        app.logger.error(f"Error creating route: {e}")
+        logger.error(f"Error creating route: {e}")
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
@@ -251,12 +254,12 @@ def update_route(route_id):
                 setattr(application, key, value)  # Update other attributes
 
         db.session.commit()
-        app.logger.info(f"Updated route: {application.hostname} for tunnel {application.tunnel.name}")
+        logger.info(f"Updated route: {application.hostname} for tunnel {application.tunnel.name}")
         return jsonify({"message": "Route updated successfully", "application": application.to_dict()}), 200
     except ValidationError as err:
         return jsonify(err.messages), 400
     except SQLAlchemyError as e:
-        app.logger.error(f"Database error updating route: {e}")
+        logger.error(f"Database error updating route: {e}")
         raise Exception("Database error.")
 
 
@@ -278,8 +281,8 @@ def delete_route(route_id):
                 application.tunnels.remove(tunnel)
 
         db.session.commit()
-        app.logger.info(f"Deleted route for application ID: {route_id}")
+        logger.info(f"Deleted route for application ID: {route_id}")
         return jsonify({"message": "Route deleted successfully"}), 200
     except SQLAlchemyError as e:
-        app.logger.error(f"Database error deleting route: {e}")
+        logger.error(f"Database error deleting route: {e}")
         raise Exception("Database error.")

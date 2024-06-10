@@ -2,6 +2,9 @@ from kubernetes import client, config
 import json
 from FlaredUI.Modules.DB import create_container, update_container
 from FlaredUI.Modules.Errors import KubectlError
+from FlaredUI.Logging import get_logger
+
+logger = get_logger(__name__)
 
 DEFAULT_NAMESPACE = "default"  # Default namespace if none is provided
 
@@ -47,10 +50,10 @@ def get_kubernetes_container_info(server, container_name, ssh_client=None):
         return filtered_data
 
     except KubectlError as e:
-        app.logger.error(f"Kubernetes API error: {e}")
+        logger.error(f"Kubernetes API error: {e}")
         raise # Re-raise the exception after logging
     except Exception as e:
-        app.logger.error(f"Error getting Kubernetes container info: {e}")
+        logger.error(f"Error getting Kubernetes container info: {e}")
         raise  # Re-raise the exception after logging
 
 
@@ -88,5 +91,5 @@ def list_kubernetes_containers(server, ssh_client=None):
         return filtered_data
 
     except Exception as e:
-        app.logger.error(f"Error listing Kubernetes containers: {e}")
+        logger.error(f"Error listing Kubernetes containers: {e}")
         raise

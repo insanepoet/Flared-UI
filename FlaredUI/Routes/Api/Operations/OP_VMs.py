@@ -5,6 +5,9 @@ from FlaredUI.Modules.VMs.VM import get_vm_info, list_vms
 from flasgger import swag_from
 from FlaredUI.Modules.Errors import VMNotFound
 from FlaredUI.Modules.VMs.Managers import *
+from FlaredUI.Logging import get_logger
+
+logger = get_logger(__name__)
 
 op_vm_bp = Blueprint("op_vms", __name__, url_prefix="/api/vms")  # Define blueprint
 
@@ -32,10 +35,10 @@ def start_vm(vm_id):
             raise NotImplementedError(f"Starting VMs for '{manager_name}' is not yet implemented.")
 
     except (VMNotFound, NotImplementedError) as e:
-        app.logger.error(str(e))
+        logger.error(str(e))
         return jsonify({'error': str(e)}), 404 if isinstance(e, VMNotFound) else 501
     except Exception as e:
-        app.logger.error(f"Unexpected error starting VM: {e}")
+        logger.error(f"Unexpected error starting VM: {e}")
         return jsonify({"error": "Internal server error"}), 500
 
 
@@ -63,7 +66,7 @@ def stop_vm(vm_id):
     except (VMNotFound, NotImplementedError) as e:
         return jsonify({'error': str(e)}), 404 if isinstance(e, VMNotFound) else 501
     except Exception as e:  # Catch any other unexpected exceptions
-        app.logger.error(f"Unexpected error stopping VM: {e}")
+        logger.error(f"Unexpected error stopping VM: {e}")
         return jsonify({"error": "Internal server error"}), 500
 
 
@@ -90,5 +93,5 @@ def restart_vm(vm_id):
     except (VMNotFound, NotImplementedError) as e:
         return jsonify({'error': str(e)}), 404 if isinstance(e, VMNotFound) else 501
     except Exception as e:  # Catch any other unexpected exceptions
-        app.logger.error(f"Unexpected error restarting VM: {e}")
+        logger.error(f"Unexpected error restarting VM: {e}")
         return jsonify({"error": "Internal server error"}), 500

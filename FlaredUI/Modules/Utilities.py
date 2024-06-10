@@ -1,6 +1,8 @@
 import pkgutil
 import importlib
 from flask import Blueprint
+from FlaredUI.Logging import get_logger
+
 
 
 class ModulesUtility:

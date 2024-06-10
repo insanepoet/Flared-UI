@@ -8,6 +8,10 @@ from FlaredUI.Modules.DB import (
 from marshmallow import ValidationError
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from flasgger import swag_from
+from FlaredUI.Logging import get_logger
+
+logger = get_logger(__name__)
+
 
 db_plugin_bp = Blueprint("db_plugins", __name__)
 
@@ -65,7 +69,7 @@ def delete_plugin_repository_route(repo_id):
             return jsonify({"error": "Plugin repository not found"}), 404
         return jsonify({"message": f"Plugin repository '{deleted_repo.name}' deleted"}), 200
     except Exception as e:
-        app.logger.error(f"Error deleting plugin repository: {e}")
+        logger.error(f"Error deleting plugin repository: {e}")
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
@@ -113,7 +117,7 @@ def get_plugin_by_id_route(plugin_id):
             return jsonify({"error": "Plugin not found"}), 404
         return jsonify(plugin.to_dict())
     except Exception as e:  # Catch general exceptions for error handling
-        app.logger.error(f"Error getting plugin: {e}")
+        logger.error(f"Error getting plugin: {e}")
         return jsonify({"error": str(e)}), 500
 
 
@@ -145,6 +149,6 @@ def delete_plugin_route(plugin_id):
             return jsonify({"error": "Plugin not found"}), 404
         return jsonify({"message": f"Plugin '{deleted_plugin.name}' deleted"}), 200
     except Exception as e:
-        app.logger.error(f"Error deleting plugin: {e}")
+        logger.error(f"Error deleting plugin: {e}")
         db.session.rollback()
         return jsonify({"error": str(e)}), 500

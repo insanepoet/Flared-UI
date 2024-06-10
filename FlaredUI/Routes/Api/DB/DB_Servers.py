@@ -5,6 +5,9 @@ from FlaredUI.Modules.DB import ServerSchema, create_server, get_all_servers, ge
 from FlaredUI.Modules.Errors import ServerNotFoundError
 from flasgger import swag_from
 from marshmallow import ValidationError
+from FlaredUI.Logging import get_logger
+
+logger = get_logger(__name__)
 
 db_server_bp = Blueprint('server', __name__, url_prefix='/api/servers')
 
@@ -38,10 +41,10 @@ def get_server_route(server_id):
             raise ServerNotFoundError(f"Server not found with id {server_id}")
         return jsonify(server.to_dict())
     except ServerNotFoundError as e:
-        app.logger.error(str(e))
+        logger.error(str(e))
         return jsonify({"error": str(e)}), 404
     except Exception as e:
-        app.logger.error(f"Unexpected error retrieving server: {e}")
+        logger.error(f"Unexpected error retrieving server: {e}")
         return jsonify({"error": "Internal server error"}), 500
 
 
@@ -57,7 +60,7 @@ def update_server_route(server_id):
         server_schema.load(data)
         return update_server(request, server_id)
     except ValidationError as err:
-        app.logger.error(f"Validation error updating server: {err.messages}")
+        logger.error(f"Validation error updating server: {err.messages}")
         return jsonify({"error": err.messages}), 400
 
 

@@ -64,7 +64,7 @@ class Keycloak(OpenID):
                 return jsonify({"error": str(e)}), 401
             except Exception as e:  # Catch any other unexpected exceptions
 
-                app.logger.error(f"Error during Keycloak authorization: {e}")
+                logger.error(f"Error during Keycloak authorization: {e}")
                 return jsonify({"error": "An error occurred during Keycloak authorization."}), 500
 
 
@@ -99,7 +99,7 @@ class Auth0(OpenID):
                 return jsonify({"error": str(e)}), 401
             except Exception as e:  # Catch any other unexpected exceptions
 
-                app.logger.error(f"Error during Auth0 authorization: {e}")
+                logger.error(f"Error during Auth0 authorization: {e}")
                 return jsonify({"error": "An error occurred during Auth0 authorization."}), 500
 
 
@@ -137,5 +137,5 @@ class Okta(OpenID):
                 return jsonify({"error": str(e)}), 401
             except Exception as e:  # Catch any other unexpected exceptions
 
-                app.logger.error(f"Error during Okta authorization: {e}")
+                logger.error(f"Error during Okta authorization: {e}")
                 return jsonify({"error": "An error occurred during Okta authorization."}), 500

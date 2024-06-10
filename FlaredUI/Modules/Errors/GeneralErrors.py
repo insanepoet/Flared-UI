@@ -1,4 +1,4 @@
-from FlaredUI import Logging as logging
+from FlaredUI.Logging import get_logger
 
 
 class CustomFlaskError(Exception):
@@ -19,7 +19,7 @@ class CustomFlaskError(Exception):
 
     def log_error(self):
         """Logs the error with traceback information."""
-        logger = logging.get_logger(__name__)
+        logger = get_logger(__name__)
         logger.error(self.message, exc_info=True)
 
 
@@ -36,7 +36,7 @@ class ModuleLogger:
     """Class to handle module-level logging consistently."""
 
     def __init__(self, module_name):
-        self.logger = logging.get_logger(module_name)
+        self.logger = get_logger(module_name)
 
     def debug(self, message):
         """Logs a debug message."""

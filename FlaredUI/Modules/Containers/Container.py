@@ -1,10 +1,10 @@
 import json
-import logging
 from FlaredUI.Modules.DB import db, get_server_by_id, get_container_by_name_and_server, create_container, update_container
 from FlaredUI.Modules.Errors import ContainerNotFound, SSHConnectionError, NotImplementedError, ContainerRetrievalError, ContainerUpdateError, ContainerManagerNotSupportedError
 from FlaredUI.Modules.Containers.Managers import *
+from FlaredUI.Logging import get_logger
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 def get_container_info(server, container_name, ssh_client=None):
     """Fetches detailed information about a container from a given server."""
@@ -118,6 +118,6 @@ def update_container_db(server, container_info):
         db.session.commit()
 
     except Exception as e:
-        app.logger.error(f"Database update failed: {e}")
+        logger.error(f"Database update failed: {e}")
         db.session.rollback()
         raise ContainerUpdateError("Database error updating container.")

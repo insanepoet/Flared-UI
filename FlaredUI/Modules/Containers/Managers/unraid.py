@@ -3,6 +3,9 @@ import json
 
 from FlaredUI.Modules.DB import create_container, update_container
 from FlaredUI.Modules.Errors import UnraidError
+from FlaredUI.Logging import get_logger
+
+logger = get_logger(__name__)
 
 UNRAID_API_ENDPOINT = "/usr/local/emhttp/plugins/dynamix.docker.manager/include/DockerClient.php"
 
@@ -46,7 +49,7 @@ def get_unraid_container_info(server, container_name, ssh_client=None):
         return filtered_data
 
     except requests.exceptions.RequestException as e:
-        app.logger.error(f"Error getting Unraid container info: {e}")
+        logger.error(f"Error getting Unraid container info: {e}")
         raise UnraidError(f"Error communicating with Unraid Docker API: {e}")
 
 
@@ -81,5 +84,5 @@ def list_unraid_containers(server, ssh_client=None):
         return filtered_data
 
     except requests.exceptions.RequestException as e:
-        app.logger.error(f"Error listing Unraid containers: {e}")
+        logger.error(f"Error listing Unraid containers: {e}")
         raise UnraidError(f"Error communicating with Unraid Docker API: {e}")

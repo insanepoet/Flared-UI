@@ -6,6 +6,10 @@ from FlaredUI.Modules.DB import (
     db, get_all_api_keys, get_api_key_by_id, get_api_keys_by_user,
     create_api_key, update_api_key, delete_api_key
 )
+from FlaredUI.Logging import get_logger
+
+logger = get_logger(__name__)
+
 
 api_keys_bp = Blueprint("api_keys", __name__)
 
@@ -29,13 +33,13 @@ def create_api_key_route():
         # Return the created API key, excluding the value for security
         return jsonify(api_key.to_dict()), 201
     except ValidationError as err:
-        app.logger.error(f"Validation error creating API key: {err.messages}")
+        logger.error(f"Validation error creating API key: {err.messages}")
         return jsonify(err.messages), 400  # Bad Request
     except ValueError as e:  # Catch ValueError from create_api_key
-        app.logger.error(f"Value error creating API key: {e}")
+        logger.error(f"Value error creating API key: {e}")
         return jsonify({"error": str(e)}), 400  # Bad Request for invalid input
     except Exception as e:
-        app.logger.error(f"Error creating API key: {e}")
+        logger.error(f"Error creating API key: {e}")
         db.session.rollback()
         return jsonify({"error": "Internal server error"}), 500  # Internal Server Error
 
@@ -50,7 +54,7 @@ def list_api_keys_route():
         api_keys = get_api_keys_by_user(current_user.id)
         return jsonify([api_key.to_dict() for api_key in api_keys])
     except Exception as e:  # Catch any unexpected errors
-        app.logger.error(f"Error listing API keys: {e}")
+        logger.error(f"Error listing API keys: {e}")
         return jsonify({"error": "Internal server error"}), 500
 
 
@@ -66,7 +70,7 @@ def get_api_key_route(api_key_id):
             raise ValueError("API key not found")
         return jsonify(api_key.to_dict())
     except Exception as e:  # Catch any unexpected errors
-        app.logger.error(f"Error getting API key: {e}")
+        logger.error(f"Error getting API key: {e}")
         return jsonify({"error": "Internal server error"}), 500
 
 
@@ -85,13 +89,13 @@ def update_api_key_route(api_key_id):
             raise ValueError("API key not found")
         return jsonify(api_key.to_dict()), 200
     except ValidationError as err:
-        app.logger.error(f"Validation error updating API key: {err.messages}")
+        logger.error(f"Validation error updating API key: {err.messages}")
         return jsonify(err.messages), 400  # Bad Request
     except ValueError as e:
         return jsonify({"error": str(e)}), 404  # Not Found
     except Exception as e:  # Catch any other unexpected errors
         db.session.rollback()
-        app.logger.error(f"Error updating API key: {e}")
+        logger.error(f"Error updating API key: {e}")
         return jsonify({"error": "Internal server error"}), 500
 
 
@@ -109,5 +113,5 @@ def delete_api_key_route(api_key_id):
         return jsonify({"error": str(e)}), 404  # Not Found
     except Exception as e:  # Catch any other unexpected errors
 
-        app.logger.error(f"Error deleting API key: {e}")
+        logger.error(f"Error deleting API key: {e}")
         return jsonify({"error": "Internal server error"}), 500

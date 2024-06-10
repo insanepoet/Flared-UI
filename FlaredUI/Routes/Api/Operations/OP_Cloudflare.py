@@ -4,6 +4,9 @@ from flasgger import swag_from
 from FlaredUI.Modules.Errors import TunnelNotFoundError, CloudflaredError
 from FlaredUI.Modules.DB import get_tunnel_by_id
 from FlaredUI.Modules.Cloudflare import cloudflared_tunnel_status, cloudflared_tunnel_run, cloudflared_tunnel_cleanup
+from FlaredUI.Logging import get_logger
+
+logger = get_logger(__name__)
 
 op_cf_bp = Blueprint("op_cloudflare", __name__, url_prefix="/api/cloudflare")
 
@@ -56,7 +59,5 @@ def tunnel_status(tunnel_id):
         tunnel_status = cloudflared_tunnel_status(tunnel.uuid)
         return jsonify({"status": tunnel_status}), 200
     except Exception as e:
-        app.logger.error(f"Error getting tunnel status: {e}")
+        logger.error(f"Error getting tunnel status: {e}")
         return jsonify({"error": str(e)}), 500
-
-

@@ -7,6 +7,10 @@ from FlaredUI.Modules.DB import (
 from FlaredUI.Modules.VMs import get_vm_info, list_vms
 from flasgger import swag_from
 from marshmallow import ValidationError
+from FlaredUI.Logging import get_logger
+
+logger = get_logger(__name__)
+
 
 db_vm_bp = Blueprint('vm', __name__)
 
@@ -27,7 +31,7 @@ def list_vms_route(server_id):
         vms = list_vms(server)
         return jsonify(vms), 200
     except Exception as e:
-        app.logger.error(f"Error listing VMs: {e}")
+        logger.error(f"Error listing VMs: {e}")
         return jsonify({"error": str(e)}), 500
 
 
@@ -46,7 +50,7 @@ def get_vm_route(server_id, vm_id):
         vm_info = get_vm_info(server, vm_id)
         return jsonify(vm_info), 200
     except Exception as e:
-        app.logger.error(f"Error getting VM info: {e}")
+        logger.error(f"Error getting VM info: {e}")
         return jsonify({"error": str(e)}), 500
 
 
@@ -73,10 +77,10 @@ def create_vm_route(server_id):
     except ValidationError as err:
         return jsonify(err.messages), 400
     except ValueError as e:  # Catch ValueError from database functions
-        app.logger.error(f"Error creating VM: {e}")
+        logger.error(f"Error creating VM: {e}")
         return jsonify({"error": str(e)}), 400
     except Exception as e:  # Catch any other unexpected exceptions
-        app.logger.error(f"Unexpected error creating VM: {e}")
+        logger.error(f"Unexpected error creating VM: {e}")
         db.session.rollback()
         return jsonify({"error": "Internal server error"}), 500
 
@@ -106,7 +110,7 @@ def update_vm_route(server_id, vm_id):
     except ValidationError as err:
         return jsonify(err.messages), 400
     except Exception as e:
-        app.logger.error(f"Unexpected error updating VM: {e}")
+        logger.error(f"Unexpected error updating VM: {e}")
         db.session.rollback()
         return jsonify({"error": "Internal server error"}), 500
 
@@ -128,6 +132,6 @@ def delete_vm_route(server_id, vm_id):
 
         return jsonify({"message": "VM deleted successfully"}), 200
     except Exception as e:
-        app.logger.error(f"Error deleting VM: {e}")
+        logger.error(f"Error deleting VM: {e}")
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
