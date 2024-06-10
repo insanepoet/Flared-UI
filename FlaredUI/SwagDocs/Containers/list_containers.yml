@@ -1,0 +1,21 @@
+tags:
+  - Containers
+summary: List Containers
+description: Retrieves a list of containers on a specific server.
+parameters:
+  - in: path
+    name: server_id
+    type: integer
+    required: true
+    description: The ID of the server.
+responses:
+  200:
+    description: A list of containers.
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/Container'
+  404:
+    description: Server not found.
+  500:
+    description: Internal server error.

@@ -1,0 +1,24 @@
+tags:
+  - Containers
+summary: Get Container Details
+description: Retrieves detailed information about a specific container on a server.
+parameters:
+  - in: path
+    name: server_id
+    type: integer
+    required: true
+    description: The ID of the server hosting the container.
+  - in: path
+    name: container_name
+    type: string
+    required: true
+    description: The name of the container.
+responses:
+  200:
+    description: Container details retrieved successfully.
+    schema:
+      $ref: '#/definitions/Container'
+  404:
+    description: Container or server not found.
+  500:
+    description: Internal server error.

@@ -1,0 +1,27 @@
+tags:
+  - VMs
+summary: Create VM
+description: Creates a new VM on the specified server.
+parameters:
+  - in: path
+    name: server_id
+    type: integer
+    required: true
+    description: The ID of the server to create the VM on.
+  - in: body
+    name: body
+    description: VM data
+    required: true
+    schema:
+      $ref: '#/components/schemas/VM'  # Reference the VM schema
+responses:
+  201:
+    description: VM created successfully.
+    schema:
+      $ref: '#/components/schemas/VM'
+  400:
+    description: Bad Request (Invalid input data or server not found).
+  401:
+    description: Unauthorized (Not logged in)
+  500:
+    description: Internal server error.

@@ -1,0 +1,18 @@
+tags:
+  - Servers
+summary: Delete Server
+description: Deletes a server by its ID.
+parameters:
+  - in: path
+    name: server_id
+    schema:
+      type: integer
+    required: true
+    description: The ID of the server to delete.
+responses:
+  200:
+    description: Server deleted successfully
+  404:
+    description: Server not found
+  500:
+    description: Internal server error

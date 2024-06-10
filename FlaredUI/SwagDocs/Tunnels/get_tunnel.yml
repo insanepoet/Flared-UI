@@ -1,0 +1,34 @@
+tags:
+  - Tunnels
+summary: Get Tunnel Details
+description: Retrieves the details of a specific Cloudflared tunnel.
+parameters:
+  - in: path
+    name: tunnel_id
+    schema:
+      type: integer
+    required: true
+    description: The ID of the tunnel to retrieve.
+responses:
+  200:
+    description: Tunnel details retrieved successfully
+    schema:
+      $ref: '#/definitions/Tunnel'
+  404:
+    description: Tunnel not found
+  500:
+    description: Internal server error
+definitions:  # Define the Tunnel schema here
+  Tunnel:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      uuid:
+        type: string
+      domain:
+        type: string
+      description:
+        type: string

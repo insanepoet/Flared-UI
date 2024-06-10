@@ -1,0 +1,56 @@
+tags:
+  - Tunnels
+summary: Update Tunnel
+description: Update an existing tunnel's details.
+parameters:
+  - in: path
+    name: tunnel_id
+    type: integer
+    required: true
+    description: The ID of the tunnel to update.
+  - in: body
+    name: body
+    description: Tunnel details to update.
+    required: true
+    schema:
+      type: object
+      properties:
+        name:
+          type: string
+          description: New name for the tunnel (optional).
+        domain:
+          type: string
+          description: New domain for the tunnel (optional).
+        description:
+          type: string
+          description: New description for the tunnel (optional).
+responses:
+  200:
+    description: Tunnel updated successfully.
+    schema:
+      $ref: '#/definitions/Tunnel'
+  400:
+    description: Bad Request. Invalid input data.
+  404:
+    description: Tunnel not found.
+  500:
+    description: Internal server error.
+definitions:
+  Tunnel:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: The unique ID of the tunnel.
+      name:
+        type: string
+        description: The name of the tunnel.
+      uuid:
+        type: string
+        description: The UUID of the tunnel.
+      domain:
+        type: string
+        description: The domain associated with the tunnel.
+      description:
+        type: string
+        description: A description of the tunnel (optional).

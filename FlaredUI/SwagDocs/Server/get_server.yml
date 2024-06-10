@@ -1,0 +1,45 @@
+tags:
+  - Servers
+summary: Get Server Details
+description: Retrieves the details of a specific server.
+parameters:
+  - in: path
+    name: server_id
+    schema:
+      type: integer
+    required: true
+    description: The ID of the server to retrieve.
+responses:
+  200:
+    description: Server details retrieved successfully
+    schema:
+      $ref: '#/definitions/Server'
+  404:
+    description: Server not found
+  500:
+    description: Internal server error
+definitions:
+  Server:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: The unique ID of the server.
+      name:
+        type: string
+        description: The name of the server.
+      hostname:
+        type: string
+        description: The hostname or IP address of the server.
+      ssh_port:
+        type: integer
+        description: The SSH port of the server.
+      username:
+        type: string
+        description: The SSH username for the server.
+      container_manager:
+        type: string
+        description: The container manager used by the server.
+      vm_manager:
+        type: string
+        description: The VMs manager used by the server.

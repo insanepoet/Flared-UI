@@ -1,0 +1,22 @@
+tags:
+  - Routes
+summary: Delete Route
+description: Deletes a route by ID.
+parameters:
+  - name: tunnel_id
+    in: path
+    type: integer
+    required: true
+    description: The ID of the tunnel.
+  - name: route_id
+    in: path
+    type: integer
+    required: true
+    description: The ID of the route to delete.
+responses:
+  200:
+    description: Route deleted successfully
+  404:
+    description: Route not found
+  500:
+    description: Internal server error

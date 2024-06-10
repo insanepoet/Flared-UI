@@ -1,0 +1,22 @@
+tags:
+  - Applications
+summary: Create Application
+description: Creates a new application associated with a server, container, or VM.
+parameters:
+  - in: body
+    name: body
+    description: Application data
+    required: true
+    schema:
+      $ref: '#/components/schemas/Application'
+responses:
+  201:
+    description: Application created successfully.
+    schema:
+      $ref: '#/components/schemas/Application'
+  400:
+    description: Bad Request (Invalid input data).
+  401:
+    description: Unauthorized (Not logged in).
+  500:
+    description: Internal Server Error.

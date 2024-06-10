@@ -1,0 +1,24 @@
+tags:
+  - VMs
+summary: Delete VM
+description: Deletes a VM from the specified server.
+parameters:
+  - in: path
+    name: server_id
+    type: integer
+    required: true
+    description: The ID of the server hosting the VM.
+  - in: path
+    name: vm_id
+    type: integer
+    required: true
+    description: The ID of the VM to delete.
+responses:
+  200:
+    description: VM deleted successfully.
+  401:
+    description: Unauthorized (Not logged in)
+  404:
+    description: VM or server not found.
+  500:
+    description: Internal server error.

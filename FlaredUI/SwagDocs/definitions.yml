@@ -1,0 +1,376 @@
+# SwagDocs/definitions.yml
+
+# User Schemas
+User:
+  type: object
+  properties:
+    id:
+      type: integer
+      description: The unique ID of the user.
+    username:
+      type: string
+      description: The username of the user.
+    email:
+      type: string
+      format: email
+      description: The email of the user.
+
+OAuthProvider:
+  type: object
+  properties:
+    id:
+      type: integer
+      description: The unique ID of the OAuth provider.
+    platform:
+      type: string
+      description: The OAuth provider (e.g., "google", "github", "okta").
+    client_id:
+      type: string
+      description: The client ID for the OAuth provider.
+    enabled:
+      type: boolean
+      description: Indicates if the OAuth provider is enabled.
+
+OAuth:
+  type: object
+  properties:
+    id:
+      type: integer
+      description: The unique ID of the OAuth record.
+    user_id:
+      type: integer
+      description: The ID of the associated user.
+    provider_id:
+      type: integer
+      description: The ID of the associated OAuth provider.
+    oauth_id:
+      type: string
+      description: The user's ID from the OAuth provider.
+    created_at:
+      type: string
+      format: date-time
+      description: The creation time of the OAuth record.
+
+
+# Tunnel Schemas
+Tunnel:
+  type: object
+  properties:
+    id:
+      type: integer
+      description: The unique ID of the tunnel.
+    name:
+      type: string
+      description: The name of the tunnel.
+    uuid:
+      type: string
+      description: The UUID of the tunnel.
+    domain:
+      type: string
+      description: The domain associated with the tunnel.
+    description:
+      type: string
+      description: A description of the tunnel (optional).
+    tlds:
+      type: array
+      items:
+        type: string
+      description: An array of top-level domains (TLDs) associated with the tunnel.
+
+
+# Server Schemas
+Server:
+  type: object
+  properties:
+    id:
+      type: integer
+      description: The unique ID of the server.
+    name:
+      type: string
+      description: The name of the server.
+    hostname:
+      type: string
+      description: The hostname or IP address of the server.
+    ssh_port:
+      type: integer
+      description: The SSH port of the server.
+    username:
+      type: string
+      description: The SSH username for the server.
+    container_manager:
+      type: string
+      description: The container manager used by the server.
+    vm_manager:
+      type: string
+      description: The VMs manager used by the server.
+    namespace:
+      type: string
+      description: The namespace used by the server (optional).
+
+ServerInput:  # Used for creating/updating a server
+  type: object
+  properties:
+    name:
+      type: string
+      description: The name of the server.
+    hostname:
+      type: string
+      description: The hostname or IP address of the server.
+    ssh_port:
+      type: integer
+      description: The SSH port of the server.
+    username:
+      type: string
+      description: The SSH username for the server.
+    password:
+      type: string
+      description: The SSH password for the server (sent only in the request, not returned in the response).
+    container_manager:
+      type: string
+      description: The container manager used by the server.
+    vm_manager:
+      type: string
+      description: The VMs manager used by the server.
+    namespace:
+      type: string
+      description: The namespace used by the server (optional).
+
+# Container Schemas
+Container:
+  type: object
+  properties:
+    id:
+      type: integer
+      description: The unique ID of the container.
+    name:
+      type: string
+      description: The name of the container.
+    image:
+      type: string
+      description: The image used by the container.
+    state:
+      type: string
+      description: The current state of the container (e.g., "running", "stopped").
+    exposed_ports:
+      type: object
+      description: A dictionary of exposed ports (key: container port, value: host port).
+    server_id:
+      type: integer
+      description: The ID of the server the container is on.
+    hostname:
+      type: string
+      description: The subdomain of the container in the tunnel.
+    applications:
+        type: array
+        items:
+          $ref: '#/components/schemas/Application'
+
+# Application Schemas
+Application:
+  type: object
+  properties:
+    id:
+      type: integer
+      description: The unique ID of the application.
+    name:
+      type: string
+      description: The name of the application.
+    exposed_ports:
+      type: array
+      items:
+        type: object
+        properties:
+          port:
+            type: integer
+            description: The exposed port number.
+          protocol:
+            type: string
+            description: The protocol of the exposed port (e.g., "tcp", "udp").
+    server_id:
+      type: integer
+      description: The ID of the server the application is running on.
+    container_id:
+      type: integer
+      description: The ID of the container the application is running in (if applicable).
+    vm_id:
+      type: integer
+      description: The ID of the VM the application is running in (if applicable).
+    hostname:
+      type: string
+      description: The subdomain of the application in the tunnel.
+    enabled:
+      type: boolean
+      description: Whether the application is enabled in the tunnel.
+    tunnels:
+      type: array
+      items:
+        type: integer
+      description: An array of tunnel IDs the application is associated with.
+
+
+# VMs Schemas
+VM:
+  type: object
+  properties:
+    id:
+      type: integer
+      description: The unique ID of the VMs.
+    name:
+      type: string
+      description: The name of the VMs.
+    os_type:
+      type: string
+      description: The operating system type of the VMs.
+    os_name:
+      type: string
+      description: The operating system name of the VMs.
+    os_version:
+      type: string
+      description: The operating system version of the VMs.
+    cpu_cores:
+      type: integer
+      description: The number of CPU cores allocated to the VMs.
+    memory:
+      type: integer
+      description: The memory size of the VMs in MB.
+    state:
+      type: string
+      description: The current state of the VMs (e.g., "running", "stopped").
+    guest_os_id:
+      type: string
+      description: The guest OS ID (if applicable).
+    creation_time:
+      type: string
+      format: date-time
+      description: The creation time of the VMs.
+    server_id:
+      type: integer
+      description: The ID of the server the VMs is on.
+
+PluginRepository:
+  type: object
+  properties:
+    id:
+      type: integer
+      description: The unique ID of the plugin repository.
+    name:
+      type: string
+      description: Name of the plugin repository
+    url:
+      type: string
+      description: URL of the plugin repository
+
+
+PluginRepositoryInput:
+  type: object
+  properties:
+    name:
+      type: string
+      description: Name of the plugin repository
+    url:
+      type: string
+      description: URL of the plugin repository
+
+# Plugin Schemas
+Plugin:
+  type: object
+  properties:
+    id:
+      type: integer
+      description: The unique ID of the plugin.
+    name:
+      type: string
+      description: The name of the plugin.
+    type:
+      type: string
+      description: The type of the plugin ('theme', 'backend', or 'frontend').
+    repository_id:
+      type: integer
+      description: The ID of the repository where the plugin is located.
+    version:
+      type: string
+      description: The version of the plugin.
+    description:
+      type: string
+      description: A description of the plugin.
+    entry_point:
+      type: string
+      description: The entry point of the plugin.
+    requires:
+      type: array
+      description: An array of dependent plugin names.
+    installed:
+      type: boolean
+      description: Whether the plugin is installed or not.
+    active:
+      type: boolean
+      description: Whether the plugin is active or not.
+
+ContainerUpdate:
+  type: object
+  properties:
+    enabled:
+      type: boolean
+      description: Whether or not the container should be included in the tunnel
+    tunnel_id:
+      type: integer
+      description: The ID of the tunnel to be associated with the container
+    hostname:
+      type: string
+      description: The hostname of the container in the tunnel
+
+# Route Schemas
+Route:
+  type: object
+  properties:
+    id:
+      type: integer
+      description: The unique ID of the route.
+    hostname:
+      type: string
+      description: The hostname associated with the route.
+    service_url:
+      type: string
+      description: The service URL the route points to.
+    tunnel_id:
+      type: integer
+      description: The ID of the tunnel this route belongs to.
+
+# ApiKeys Schemas
+ApiKey:
+  type: object
+  properties:
+    id:
+      type: integer
+      description: The unique ID of the API key.
+    name:
+      type: string
+      description: The name of the API key.
+    description:
+      type: string
+      description: A description of the API key (optional).
+    user_id:
+      type: integer
+      description: The ID of the user who owns the API key.
+
+
+# AppSettings Schemas
+AppSettings:
+  type: object
+  properties:
+    id:
+      type: integer
+      description: The unique ID of the app setting.
+    name:
+      type: string
+      description: The name of the app setting.
+    value:
+      type: string
+      description: The value of the app setting.
+    last_modified:
+      type: string
+      format: date-time
+      description: The last modified timestamp of the app setting.
+    modified_by:
+      type: integer
+      description: The ID of the user who last modified the app setting.

@@ -1,0 +1,21 @@
+tags:
+  - VMs
+summary: List VMs on Server
+description: Retrieves a list of all virtual machines (VMs) running on the specified server.
+parameters:
+  - in: path
+    name: server_id
+    type: integer
+    required: true
+    description: The ID of the server.
+responses:
+  200:
+    description: A list of VMs on the server.
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/VMs'  # Referencing the VMs schema
+  404:
+    description: Server not found.
+  500:
+    description: Internal server error.

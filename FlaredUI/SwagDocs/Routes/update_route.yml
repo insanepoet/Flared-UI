@@ -1,0 +1,38 @@
+tags:
+  - Routes
+summary: Update Route
+description: Updates an existing route for a specific tunnel.
+parameters:
+  - name: tunnel_id
+    in: path
+    type: integer
+    required: true
+    description: The ID of the tunnel.
+  - name: route_id
+    in: path
+    type: integer
+    required: true
+    description: The ID of the route to update.
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      properties:
+        hostname:
+          type: string
+          description: The updated hostname for the route.
+        service_url:
+          type: string
+          description: The updated service URL for the route.
+responses:
+  200:
+    description: Route updated successfully
+    schema:
+      $ref: '#/definitions/Route'
+  400:
+    description: Bad request (invalid input)
+  404:
+    description: Route or tunnel not found
+  500:
+    description: Internal server error

@@ -1,0 +1,26 @@
+tags:
+  - Routes
+summary: Create Route
+description: Creates a new route for a specific tunnel.
+parameters:
+  - name: tunnel_id
+    in: path
+    type: integer
+    required: true
+    description: The ID of the tunnel.
+  - name: body
+    in: body
+    required: true
+    schema:
+      $ref: '#/definitions/Route'  # Assuming you have a 'Route' schema defined elsewhere (e.g., in a separate definitions.yml file)
+responses:
+  201:
+    description: Route created successfully
+    schema:
+      $ref: '#/definitions/Route'
+  400:
+    description: Bad request (invalid input)
+  404:
+    description: Tunnel not found
+  500:
+    description: Internal server error

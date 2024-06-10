@@ -1,0 +1,13 @@
+tags:
+  - Plugins
+summary: List Plugin Repositories
+description: Retrieves a list of all plugin repositories.
+responses:
+  200:
+    description: List of plugin repositories retrieved successfully
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/PluginRepository'
+  500:
+    description: Internal server error (if there's an issue fetching repositories from the database)

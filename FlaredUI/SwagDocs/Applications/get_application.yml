@@ -1,0 +1,19 @@
+tags:
+  - Applications
+summary: Get Application
+description: Retrieves details of a specific application by its ID.
+parameters:
+  - in: path
+    name: application_id
+    type: integer
+    required: true
+    description: The ID of the application.
+responses:
+  200:
+    description: Application details.
+    schema:
+      $ref: '#/components/schemas/Application'
+  404:
+    description: Application not found.
+  500:
+    description: Internal Server Error.

@@ -1,0 +1,37 @@
+tags:
+  - Routes
+summary: List Routes
+description: Retrieves a list of all routes associated with a specific tunnel.
+parameters:
+  - name: tunnel_id
+    in: path
+    type: integer
+    required: true
+    description: The ID of the tunnel.
+responses:
+  200:
+    description: List of routes retrieved successfully
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/Route'
+  404:
+    description: Tunnel not found
+  500:
+    description: Internal server error
+definitions:
+  Route:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: The unique ID of the route.
+      hostname:
+        type: string
+        description: The hostname associated with the route.
+      service_url:
+        type: string
+        description: The service URL the route points to.
+      tunnel_id:
+        type: integer
+        description: The ID of the tunnel this route belongs to.

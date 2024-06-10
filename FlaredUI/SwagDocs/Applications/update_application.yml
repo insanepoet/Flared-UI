@@ -1,0 +1,27 @@
+tags:
+  - Applications
+summary: Update Application
+description: Updates an existing application's information.
+parameters:
+  - in: path
+    name: application_id
+    type: integer
+    required: true
+    description: The ID of the application to update.
+  - in: body
+    name: body
+    description: Application data to update (partial update allowed)
+    required: true
+    schema:
+      $ref: '#/components/schemas/Application'
+responses:
+  200:
+    description: Application updated successfully.
+    schema:
+      $ref: '#/components/schemas/Application'
+  400:
+    description: Bad Request (Invalid input data).
+  404:
+    description: Application not found.
+  500:
+    description: Internal Server Error.

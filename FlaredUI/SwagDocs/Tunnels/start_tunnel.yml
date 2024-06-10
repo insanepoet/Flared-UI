@@ -1,0 +1,17 @@
+tags:
+  - Tunnels
+summary: Start Tunnel
+description: Starts a Cloudflare tunnel.
+parameters:
+  - in: path
+    name: tunnel_id
+    type: integer
+    required: true
+    description: The ID of the tunnel to start.
+responses:
+  200:
+    description: Tunnel started successfully.
+  404:
+    description: Tunnel not found.
+  500:
+    description: Internal server error (e.g., error starting the tunnel).

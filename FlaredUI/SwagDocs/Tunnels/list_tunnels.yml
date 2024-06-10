@@ -1,0 +1,32 @@
+tags:
+  - Tunnels
+summary: List All Tunnels
+description: Retrieves a list of all Cloudflared tunnels configured in the system.
+responses:
+  200:
+    description: List of tunnels retrieved successfully
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/Tunnel'
+  500:
+    description: Internal server error (if there's an issue fetching tunnels from the database)
+definitions:
+  Tunnel:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: The unique ID of the tunnel.
+      name:
+        type: string
+        description: The name of the tunnel.
+      uuid:
+        type: string
+        description: The UUID of the tunnel.
+      domain:
+        type: string
+        description: The domain associated with the tunnel.
+      description:
+        type: string
+        description: A description of the tunnel (optional).

@@ -1,0 +1,17 @@
+tags:
+  - Plugins
+summary: Activate Plugin
+description: Activates a plugin by ID.
+parameters:
+  - name: plugin_id
+    in: path
+    type: integer
+    required: true
+    description: The ID of the plugin to activate.
+responses:
+  200:
+    description: Plugin activated successfully
+  404:
+    description: Plugin not found
+  500:
+    description: Internal server error

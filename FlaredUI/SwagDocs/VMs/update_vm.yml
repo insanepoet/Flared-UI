@@ -1,0 +1,34 @@
+tags:
+  - VMs
+summary: Update VM
+description: Updates an existing VM on the specified server.
+parameters:
+  - in: path
+    name: server_id
+    type: integer
+    required: true
+    description: The ID of the server hosting the VM.
+  - in: path
+    name: vm_id
+    type: integer
+    required: true
+    description: The ID of the VM to update.
+  - in: body
+    name: body
+    description: VM data to update (partial update allowed)
+    required: true
+    schema:
+      $ref: '#/components/schemas/VM'
+responses:
+  200:
+    description: VM updated successfully.
+    schema:
+      $ref: '#/components/schemas/VM'
+  400:
+    description: Bad Request (Invalid input data or server not found).
+  401:
+    description: Unauthorized (Not logged in)
+  404:
+    description: VM not found.
+  500:
+    description: Internal server error.

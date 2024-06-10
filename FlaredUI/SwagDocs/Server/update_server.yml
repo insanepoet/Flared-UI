@@ -1,0 +1,50 @@
+tags:
+  - Servers
+summary: Update Server
+description: Updates the details of an existing server.
+parameters:
+  - in: path
+    name: server_id
+    schema:
+      type: integer
+    required: true
+    description: The ID of the server to update.
+  - in: body
+    name: body
+    description: Server details to update
+    required: true
+    schema:
+      type: object
+      properties:
+        name:
+          type: string
+          description: New name for the server (optional).
+        hostname:
+          type: string
+          description: New hostname or IP address for the server (optional).
+        ssh_port:
+          type: integer
+          description: New SSH port for the server (optional).
+        username:
+          type: string
+          description: New SSH username for the server (optional).
+        container_manager:
+          type: string
+          description: New container manager for the server (optional).
+        vm_manager:
+          type: string
+          description: New VMs manager for the server (optional).
+        namespace:
+          type: string
+          description: New namespace for the server (optional).
+responses:
+  200:
+    description: Server updated successfully
+    schema:
+      $ref: '#/definitions/Server'
+  400:
+    description: Bad request (invalid input)
+  404:
+    description: Server not found
+  500:
+    description: Internal server error

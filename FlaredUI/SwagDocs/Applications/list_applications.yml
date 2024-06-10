@@ -1,0 +1,13 @@
+tags:
+  - Applications
+summary: List Applications
+description: Retrieves a list of all applications.
+responses:
+  200:
+    description: List of applications.
+    schema:
+      type: array
+      items:
+        $ref: '#/components/schemas/Application'
+  500:
+    description: Internal Server Error.

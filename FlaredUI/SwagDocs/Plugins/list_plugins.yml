@@ -1,0 +1,13 @@
+tags:
+  - Plugins
+summary: List Plugins
+description: Retrieves a list of all plugins.
+responses:
+  200:
+    description: List of plugins retrieved successfully
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/Plugin'
+  500:
+    description: Internal server error (if there's an issue fetching plugins from the database)

@@ -1,0 +1,24 @@
+tags:
+  - VMs
+summary: Get VMs Details
+description: Retrieves detailed information about a specific virtual machine (VMs) on a server.
+parameters:
+  - in: path
+    name: server_id
+    type: integer
+    required: true
+    description: The ID of the server hosting the VMs.
+  - in: path
+    name: vm_name
+    type: string
+    required: true
+    description: The name of the VMs.
+responses:
+  200:
+    description: VMs details retrieved successfully.
+    schema:
+      $ref: '#/definitions/VMs'  # Referencing the VMs schema
+  404:
+    description: VMs or server not found.
+  500:
+    description: Internal server error.

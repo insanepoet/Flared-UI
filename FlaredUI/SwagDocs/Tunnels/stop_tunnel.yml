@@ -1,0 +1,17 @@
+tags:
+  - Tunnels
+summary: Stop Tunnel
+description: Stops a Cloudflare tunnel.
+parameters:
+  - in: path
+    name: tunnel_id
+    type: integer
+    required: true
+    description: The ID of the tunnel to stop.
+responses:
+  200:
+    description: Tunnel stopped successfully.
+  404:
+    description: Tunnel not found.
+  500:
+    description: Internal server error (e.g., error stopping the tunnel).

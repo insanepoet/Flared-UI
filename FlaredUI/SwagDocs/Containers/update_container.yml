@@ -1,0 +1,32 @@
+tags:
+  - Containers
+summary: Update Container
+description: Updates the settings of a container on a specific server.
+parameters:
+  - in: path
+    name: server_id
+    type: integer
+    required: true
+    description: The ID of the server hosting the container.
+  - in: path
+    name: container_name
+    type: string
+    required: true
+    description: The name of the container.
+  - in: body
+    name: body
+    description: Container details to update.
+    required: true
+    schema:
+      $ref: '#/definitions/ContainerUpdate'
+responses:
+  200:
+    description: Container updated successfully.
+    schema:
+      $ref: '#/definitions/Container'
+  400:
+    description: Bad request (invalid input).
+  404:
+    description: Container or server not found.
+  500:
+    description: Internal server error.

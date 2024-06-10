@@ -1,0 +1,17 @@
+tags:
+  - Applications
+summary: Delete Application
+description: Deletes an existing application by its ID.
+parameters:
+  - in: path
+    name: application_id
+    type: integer
+    required: true
+    description: The ID of the application to delete.
+responses:
+  200:
+    description: Application deleted successfully.
+  404:
+    description: Application not found.
+  500:
+    description: Internal Server Error.

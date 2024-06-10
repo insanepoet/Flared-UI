@@ -1,0 +1,13 @@
+tags:
+  - Servers
+summary: List Servers
+description: Retrieves a list of all configured servers.
+responses:
+  200:
+    description: List of servers retrieved successfully
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/Server'  # Reference the Server schema from definitions.yml
+  500:
+    description: Internal server error (if there's an issue fetching servers from the database)

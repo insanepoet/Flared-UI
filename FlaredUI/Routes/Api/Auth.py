@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, redirect, url_for
+from flask import Blueprint, request
 from flask_login import login_required, logout_user
 from FlaredUI.Modules.Auth import handle_login, logout
 from flasgger import swag_from

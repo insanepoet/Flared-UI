@@ -1,0 +1,111 @@
+openapi: 3.0.0  # Or your chosen OpenAPI version (e.g., 2.0)
+
+info:
+  title: Flared API
+  version: 1.0.0
+  description: API for managing Cloudflare Tunnels, servers, containers, VMs, and plugins.
+
+servers:
+  - url: http://localhost:8000/api
+
+# Global Security Definition
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: "Authentication using API key"
+
+security:
+  - ApiKeyAuth: []
+
+# Paths (API Endpoints)
+paths:
+  # Auth Endpoints
+  /auth/login:
+    post:
+      $ref: './Auth/login.yml'
+  /auth/logout:
+    post:
+      $ref: './Auth/logout.yml'
+  /auth/oauth/login/{provider}:
+    get:
+      $ref: './Auth/oauth_login.yml'
+  /auth/oauth/authorize/{provider}:
+    get:
+      $ref: './Auth/oauth_authorize.yml'
+  #Tunnel Endpoints
+  /tunnels:
+    get:
+      $ref: './Tunnels/list_tunnels.yml'
+    post:
+      $ref: './Tunnels/create_tunnel.yml'
+  /tunnels/{tunnel_id}:
+    get:
+      $ref: './Tunnels/get_tunnel.yml'
+    put:
+      $ref: './Tunnels/update_tunnel.yml'
+    delete:
+      $ref: './Tunnels/delete_tunnel.yml'
+  /tunnels/{tunnel_id}/start:
+    post:
+      $ref: './Tunnels/start_tunnel.yml'
+  /tunnels/{tunnel_id}/stop:
+    post:
+      $ref: './Tunnels/stop_tunnel.yml'
+  # Container Endpoints
+  /servers/{server_id}/containers:
+    get:
+      $ref: './Containers/list_containers.yml'
+  /servers/{server_id}/containers/{container_name}:
+    get:
+      $ref: './Containers/get_container.yml'
+  /servers/{server_id}/containers/{container_name}/update:
+    post:
+      $ref: './Containers/update_container.yml'
+  /servers/{server_id}/containers/{container_name}/delete:
+    delete:
+      $ref: './Containers/delete_container.yml'
+  # VM Endpoints
+  /servers/{server_id}/vms:
+    get:
+      $ref: './VMs/list_vms.yml'
+  /servers/{server_id}/vms/{vm_id}:
+    get:
+      $ref: './VMs/get_vm.yml'
+    put:
+      $ref: './VMs/update_vm.yml'
+  #Routes Endpoints
+  /routes:
+    post:
+      $ref: './Routes/create_route.yml'
+  /routes/{route_id}:
+    delete:
+      $ref: './Routes/delete_route.yml'
+    put:
+      $ref: './Routes/update_route.yml'
+  /tunnels/{tunnel_id}/routes:
+    get:
+      $ref: './Routes/list_routes.yml'
+  #Plugin Endpoints
+  /plugins:
+    get:
+      $ref: './Plugins/list_plugins.yml'
+  /plugins/activate/{plugin_id}:
+    post:
+      $ref: './Plugins/activate_plugin.yml'
+  /plugins/deactivate/{plugin_id}:
+    post:
+      $ref: './Plugins/deactivate_plugin.yml'
+  /plugins/install/{plugin_id}:
+    post:
+      $ref: './Plugins/install_plugin.yml'
+  /plugins/uninstall/{plugin_id}:
+    post:
+      $ref: './Plugins/uninstall_plugin.yml'
+  /plugin-repositories:
+    get:
+      $ref: './Plugins/list_plugin_repositories.yml'
+    post:
+      $ref: './Plugins/add_plugin_repository.yml'

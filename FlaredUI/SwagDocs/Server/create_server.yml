@@ -1,0 +1,75 @@
+tags:
+  - Servers
+summary: Create Server
+description: Creates a new server.
+parameters:
+  - name: body
+    in: body
+    description: Server details
+    required: true
+    schema:
+      $ref: '#/definitions/ServerInput'
+responses:
+  201:
+    description: Server created successfully
+    schema:
+      $ref: '#/definitions/Server'
+  400:
+    description: Bad request (invalid input)
+  500:
+    description: Internal server error
+definitions:
+  ServerInput:
+    type: object
+    properties:
+      name:
+        type: string
+        description: The name of the server.
+      hostname:
+        type: string
+        description: The hostname or IP address of the server.
+      ssh_port:
+        type: integer
+        description: The SSH port of the server.
+      username:
+        type: string
+        description: The SSH username for the server.
+      password:
+        type: string
+        description: The SSH password for the server (sent only in the request, not returned in the response).
+      container_manager:
+        type: string
+        description: The container manager used by the server.
+      vm_manager:
+        type: string
+        description: The VMs manager used by the server.
+      namespace:
+        type: string
+        description: The namespace used by the server (optional).
+  Server:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: The unique ID of the server.
+      name:
+        type: string
+        description: The name of the server.
+      hostname:
+        type: string
+        description: The hostname or IP address of the server.
+      ssh_port:
+        type: integer
+        description: The SSH port of the server.
+      username:
+        type: string
+        description: The SSH username for the server.
+      container_manager:
+        type: string
+        description: The container manager used by the server.
+      vm_manager:
+        type: string
+        description: The VMs manager used by the server.
+      namespace:
+        type: string
+        description: The namespace used by the server (optional).

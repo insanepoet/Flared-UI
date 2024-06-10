@@ -1,0 +1,20 @@
+tags:
+  - Plugins
+summary: Add Plugin Repository
+description: Adds a new plugin repository.
+parameters:
+  - name: body
+    in: body
+    description: Plugin repository details
+    required: true
+    schema:
+      $ref: '#/definitions/PluginRepositoryInput'
+responses:
+  201:
+    description: Plugin repository added successfully
+    schema:
+      $ref: '#/definitions/PluginRepository'
+  400:
+    description: Bad request (invalid input)
+  500:
+    description: Internal server error

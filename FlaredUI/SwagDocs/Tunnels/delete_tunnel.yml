@@ -1,0 +1,18 @@
+tags:
+  - Tunnels
+summary: Delete a Tunnel
+description: Deletes a Cloudflared tunnel by its ID.
+parameters:
+  - in: path
+    name: tunnel_id
+    schema:
+      type: integer
+    required: true
+    description: The ID of the tunnel to delete.
+responses:
+  200:
+    description: Tunnel deleted successfully
+  404:
+    description: Tunnel not found
+  500:
+    description: Internal server error

@@ -1,0 +1,9 @@
+tags:
+  - Authentication
+summary: User Logout
+description: Logs out the currently authenticated user.
+responses:
+  200:
+    description: Logout successful
+  401:
+    description: Unauthorized (Not logged in)

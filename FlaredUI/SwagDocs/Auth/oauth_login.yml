@@ -1,0 +1,15 @@
+tags:
+  - Authentication
+summary: Initiate OAuth Login
+description: Initiates the OAuth login flow for the specified provider.
+parameters:
+  - in: path
+    name: provider
+    type: string
+    required: true
+    description: The name of the OAuth provider (e.g., "github", "google", "okta").
+responses:
+  302:
+    description: Redirect to the OAuth provider's authorization page.
+  404:
+    description: Not Found (OAuth provider not supported).

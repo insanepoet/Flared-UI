@@ -1,0 +1,19 @@
+tags:
+  - Authentication
+summary: OAuth Authorization Callback
+description: Handles the callback from an OAuth provider after user authorization.
+parameters:
+  - in: path
+    name: provider
+    type: string
+    required: true
+    description: The name of the OAuth provider (e.g., "github", "google", "okta").
+responses:
+  302:
+    description: Redirect to the application's main page after successful login.
+  400:
+    description: Bad Request (e.g., invalid state parameter, invalid user data from provider).
+  401:
+    description: Unauthorized (e.g., failed to retrieve user info from provider).
+  500:
+    description: Internal server error during OAuth authorization.
