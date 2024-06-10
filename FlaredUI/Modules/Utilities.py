@@ -1,8 +1,6 @@
 import pkgutil
 import importlib
 from flask import Blueprint
-from FlaredUI.Logging import get_logger
-
 
 
 class ModulesUtility:
@@ -26,8 +24,13 @@ class ModulesUtility:
     def export_globals(self):  # Remove the module_name argument
         """Dynamically creates __all__ to include all objects (except those starting with "_") from the module's
         namespace."""
-        caller_globals = dict(importlib.import_module(self.logger.logger.name).__dict__)
-        # Remove private attributes (starting with "_") and the logger itself
+        try:
+            # Attempt to import module based on logger name
+            caller_globals = dict(importlib.import_module(self.logger.logger.name).__dict__)
+        except ModuleNotFoundError:
+            # If module not found, use the current module's globals
+            caller_globals = dict(globals())
+            # Remove private attributes (starting with "_") and the logger itself
         public_globals = [name for name in caller_globals if not name.startswith('_') and name != 'logger']
         globals()['__all__'] = public_globals
 

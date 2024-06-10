@@ -10,7 +10,7 @@ LOGGING_CONFIG = {
     'disable_existing_loggers': False,
     'formatters': {
         'json': {
-            'class': 'pythonjsonlogger.jsonlogger.JsonFormatter',
+            '()': 'pythonjsonlogger.jsonlogger.JsonFormatter',
             'format': '%(asctime)s %(levelname)s %(name)s %(message)s',
         },
     },

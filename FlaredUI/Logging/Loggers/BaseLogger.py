@@ -1,6 +1,5 @@
 import logging
 import logging.config
-from FlaredUI.Logging.Logging_Config import LOGGING_CONFIG
 
 
 class BaseLogger:
@@ -10,6 +9,7 @@ class BaseLogger:
         self.logger = logging.getLogger(name)
         self.logger.setLevel(level)
         self.logger.propagate = True
+        self.logger.name = "BaseLogger"
 
     def debug(self, msg, *args, **kwargs):
         self.logger.debug(msg, *args, **kwargs)

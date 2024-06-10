@@ -10,11 +10,13 @@ from FlaredUI.Routes import api_bp
 
 
 # Create the Flask app
-app = Flask(__name__)
+app = Flask(__name__, instance_relative_config=True, static_url_path='', template_folder='../Templates',
+            static_folder='../Static')
 
 
 # Initialize Logging
-logger = initialize_logging()
+log_dir=os.path.join(app.root_path, '..', 'Data', 'Logs')
+logger = initialize_logging(log_dir)
 
 
 # Load configuration
@@ -30,6 +32,11 @@ if not app.config['SQLALCHEMY_DATABASE_URI']:
     app.config['SQLALCHEMY_DATABASE_URI'] = DatabaseURI().build_uri()
 db.init_app(app)
 
+# Create LoginManager (if needed)
+login_manager = LoginManager()
+login_manager.init_app(app)
+# login_manager.login_view = "auth.userpass_login"
+login_manager.login_view = 'auth.login'
 
 # Initialize OAuth after the database is initialized
 init_oauth(app)
