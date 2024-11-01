@@ -79,7 +79,47 @@ Flared-UI supports service discovery for a wide range of environments, including
 
 ## Future Development
 
-[Content from your previous "Future Development" section]
+Flared-UI is an evolving project, and I'm committed to adapting it to the latest changes in [Cloudflared](https://github.com/cloudflare/cloudflared) while actively considering user feedback and feature requests.
+
+
+
+While the initial focus has been on creating a streamlined and intuitive user interface for managing Cloudflare Tunnels locally, several exciting enhancements are on the horizon. These include:
+
+
+
+### Enhanced Service Discovery: 
+
+_Expanding the range of supported services and network protocols, making it even easier for users to discover and expose applications running on their homelabs._
+
+    
+
+### Cloudflare API Integration: 
+
+_Once the [stable release of Cloudflare's Python SDK 3.x](https://github.com/cloudflare/python-cloudflare/discussions/191) becomes available, the application will gain seamless integration with the Cloudflare API, allowing for direct management of DNS records, tunnel configuration, and other account-level settings._
+
+
+
+### Extensibility through Plugins: 
+
+_The introduction of a plugin system will enable developers to tailor Flared-UI to their unique requirements. This will open up opportunities for custom service discovery methods, specialized management features, and integrations with other tools and platforms._
+
+
+
+### Community Collaboration: 
+
+_Pull requests for new managers, discovery methods, and other enhancements are highly encouraged! Your contributions can help shape the future of Flared-UI and make it an even more valuable tool for the community._
+
+
+
+### Additional Feature Requests: 
+
+_I'm always open to hearing your ideas for new features or improvements. If you have a suggestion, please don't hesitate to reach out and share it!_
+
+
+
+By fostering a collaborative environment and staying responsive to user needs, I aim to ensure that Flared-UI remains a simple solution for managing Cloudflare Tunnels in your homelab.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Contributing
 
